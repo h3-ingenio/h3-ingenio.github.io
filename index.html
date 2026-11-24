@@ -20,6 +20,14 @@
 </head>
 <body>
 <iframe src="https://script.google.com/macros/s/AKfycbwYmOd31ZRVWn-qIoV_KIJdMIvERXjO6TxkDF9x6Gm3tALbkth5Bns-pD4AdXAjxHugmA/exec" title="Obras H3" allow="clipboard-write; fullscreen"></iframe>
-<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+<script>
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
+// Guarda la sesión aquí, porque el iPhone borra la del recuadro de Google cada vez que se abre la app desde el inicio.
+(function(){var K='obras-h3-token',ok=/^https:\/\/[a-z0-9-]+-script\.googleusercontent\.com$/;
+window.addEventListener('message',function(e){if(!ok.test(e.origin))return;var d=e.data||{};
+  if(d.h3==='ask'){var t='';try{t=localStorage.getItem(K)||''}catch(x){}e.source.postMessage({h3:'token',token:t},e.origin)}
+  else if(d.h3==='token'){try{if(/^[a-f0-9]{64}$/.test(d.token||''))localStorage.setItem(K,d.token);else localStorage.removeItem(K)}catch(x){}}
+});})();
+</script>
 </body>
 </html>
