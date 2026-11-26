@@ -16,15 +16,31 @@
   html,body{margin:0;height:100%;background:#1b1718;overflow:hidden}
   iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;
     padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);box-sizing:border-box}
+  #ld{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#1b1718;color:#e9e4e4;font:15px -apple-system,system-ui,sans-serif;text-align:center;padding:24px;transition:opacity .3s}
+  #ld.off{opacity:0;pointer-events:none}
+  #ld.bar{inset:auto 0 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom));gap:6px;border-top:1px solid #333}
+  #ld.bar .lg{display:none}
+  #ld.bar #fb p{margin:0 0 4px;max-width:none}
+  .lg{width:72px;height:72px;border-radius:16px;background:#d2202f;color:#fff;font:800 34px system-ui;display:flex;align-items:center;justify-content:center}
+  #fb p{max-width:300px;line-height:1.4;color:#b9b0b1}
+  .bt{display:inline-block;background:#d2202f;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600;margin:6px}
+  .bt2{background:none;border:1px solid #555;color:#e9e4e4;padding:11px 20px;border-radius:10px;font:inherit;margin:6px}
 </style>
 </head>
 <body>
+<div id="ld"><div class="lg">H3</div><p id="ldt">Cargando obras…</p>
+  <div id="fb" hidden><p>No se pudo abrir aquí. Puede pasar en iPhone cuando Safari tiene varias cuentas de Google abiertas.</p>
+  <a class="bt" href="https://script.google.com/macros/s/AKfycbwYmOd31ZRVWn-qIoV_KIJdMIvERXjO6TxkDF9x6Gm3tALbkth5Bns-pD4AdXAjxHugmA/exec" target="_top">Abrir la app</a>
+  <button class="bt2" onclick="location.reload()">Reintentar</button><button class="bt2" onclick="document.getElementById('ld').style.display='none'">Cerrar</button></div></div>
 <iframe src="https://script.google.com/macros/s/AKfycbwYmOd31ZRVWn-qIoV_KIJdMIvERXjO6TxkDF9x6Gm3tALbkth5Bns-pD4AdXAjxHugmA/exec" title="Obras H3" allow="clipboard-write; fullscreen"></iframe>
 <script>
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
 // Guarda la sesión aquí, porque el iPhone borra la del recuadro de Google cada vez que se abre la app desde el inicio.
 (function(){var K='obras-h3-token',ok=/^https:\/\/[a-z0-9-]+-script\.googleusercontent\.com$/;
-window.addEventListener('message',function(e){if(!ok.test(e.origin))return;var d=e.data||{};
+var ld=document.getElementById('ld');
+function listo(){ld.classList.add('off');setTimeout(function(){ld.style.display='none'},400)}
+setTimeout(function(){if(ld.style.display!=='none'){document.getElementById('ldt').hidden=true;document.getElementById('fb').hidden=false;ld.classList.add('bar')}},15000);
+window.addEventListener('message',function(e){if(!ok.test(e.origin))return;var d=e.data||{};listo();
   if(d.h3==='ask'){var t='';try{t=localStorage.getItem(K)||''}catch(x){}e.source.postMessage({h3:'token',token:t},e.origin)}
   else if(d.h3==='token'){try{if(/^[a-f0-9]{64}$/.test(d.token||''))localStorage.setItem(K,d.token);else localStorage.removeItem(K)}catch(x){}}
 });})();
