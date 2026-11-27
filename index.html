@@ -2,6 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<script>
+// En iPhone y iPad, Safari bloquea la app de Google dentro de esta página, así que se abre directo.
+(function(){var ua=navigator.userAgent||'',ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+if(ios&&location.search.indexOf('marco=1')<0)location.replace('https://script.google.com/macros/s/AKfycbwYmOd31ZRVWn-qIoV_KIJdMIvERXjO6TxkDF9x6Gm3tALbkth5Bns-pD4AdXAjxHugmA/exec');})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1b1718">
 <title>Obras H3</title>
@@ -30,11 +35,11 @@
 <body>
 <div id="ld"><div class="lg">H3</div><p id="ldt">Cargando obras…</p>
   <div id="fb" hidden><p>No se pudo abrir aquí. Puede pasar en iPhone cuando Safari tiene varias cuentas de Google abiertas.</p>
-  <a class="bt" href="https://script.google.com/macros/s/AKfycbwYmOd31ZRVWn-qIoV_KIJdMIvERXjO6TxkDF9x6Gm3tALbkth5Bns-pD4AdXAjxHugmA/exec" target="_top">Abrir la app</a>
+  <a class="bt" href="https://script.google.com/macros/s/AKfycbwYmOd31ZRVWn-qIoV_KIJdMIvERXjO6TxkDF9x6Gm3tALbkth5Bns-pD4AdXAjxHugmA/exec">Abrir la app</a>
   <button class="bt2" onclick="location.reload()">Reintentar</button><button class="bt2" onclick="document.getElementById('ld').style.display='none'">Cerrar</button></div></div>
 <iframe src="https://script.google.com/macros/s/AKfycbwYmOd31ZRVWn-qIoV_KIJdMIvERXjO6TxkDF9x6Gm3tALbkth5Bns-pD4AdXAjxHugmA/exec" title="Obras H3" allow="clipboard-write; fullscreen"></iframe>
 <script>
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
+if('serviceWorker' in navigator&&navigator.serviceWorker.getRegistrations)navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister()})}).catch(function(){});
 // Guarda la sesión aquí, porque el iPhone borra la del recuadro de Google cada vez que se abre la app desde el inicio.
 (function(){var K='obras-h3-token',ok=/^https:\/\/[a-z0-9-]+-script\.googleusercontent\.com$/;
 var ld=document.getElementById('ld');
